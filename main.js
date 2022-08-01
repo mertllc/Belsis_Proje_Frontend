@@ -6,6 +6,9 @@ function init() {
     const standard = new ol.layer.Tile({
         source: new ol.source.OSM(),
     });
+    //wkt tanımlama
+    var wktt = new ol.format.WKT()
+
     // Parsellerin ekleneceği tabloların tanımlanması
     var table;
     table = document.getElementById("table");
@@ -60,20 +63,21 @@ function init() {
         map.addInteraction(snap);
         draw.on('drawend', function (evt) {
             console.log(evt.feature);
+            var wktString = wkt.writeFeature(evt.feature);
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
             var button = document.getElementById("add_button");
             button.onclick = function () {
-                var sehir = document.getElementById("sehir");
-                var ilce = document.getElementById("ilce");
-                var table = document.getElementById("table");
-                var row = table.insertRow(1);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-                cell1.innerHTML = "1";
-                cell2.innerHTML = sehir.value;
-                cell3.innerHTML = ilce.value;
+                // var sehir = document.getElementById("sehir");
+                // var ilce = document.getElementById("ilce");
+                // var table = document.getElementById("table");
+                // var row = table.insertRow(1);
+                // var cell1 = row.insertCell(0);
+                // var cell2 = row.insertCell(1);
+                // var cell3 = row.insertCell(2);
+                // cell1.innerHTML = "1";
+                // cell2.innerHTML = sehir.value;
+                // cell3.innerHTML = ilce.value;
                 modal.style.display = "none";
             }
         })
@@ -85,17 +89,51 @@ function init() {
         addInteractions();
     };
     addInteractions();
-}
-function get_features() {
 
-    $.ajax({
-        url: 'https://localhost:44381/api/parcel',
-        dataType: 'json',
-        type: 'get',
-        contentType: 'application/json',
-        data: { "data": "check" },
-        success: function (data) {
-            console.log(data);
-        }
-    });
+    function add_data_to_table(id, il, ilce, wkt) {
+        var row = table.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        const parsel = wktt.readFeature(wkt, {
+            dataProjection: 'EPSG:3857',
+            featureProjection: 'EPSG:3857',
+        });
+        source.addFeature(parsel);
+        cell1.innerHTML = id;
+        cell2.innerHTML = il;
+        cell3.innerHTML = ilce;
+    }
+
+    function get_features() {
+
+        $.ajax({
+            url: 'https://localhost:44381/api/parcel',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            data: { "data": "check" },
+            success: function (data) {
+                for (var i in data) {
+                    add_data_to_table(data[i].id, data[i].il, data[i].ilce, data[i].wkt);
+                }
+            }
+        });
+    }
 }
+
+
+// function get() {
+//     $.ajax({
+//         url: 'https://localhost:44382/api/location',
+//         dataType: 'json',
+//         type: 'get',
+//         contentType: 'application/json',
+//         data: { "data": "check" },
+//         success: function (data) {
+//             for (var i in data) {
+//                 insert_function_ontable(data[i].id, data[i].wkt, data[i].sehir, data[i].ilce);
+//             }
+//         }
+//     });
+// }
