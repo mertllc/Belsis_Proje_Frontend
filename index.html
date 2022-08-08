@@ -32,7 +32,9 @@
                         <th scope="col">#</th>
                         <th scope="col">Parsel il</th>
                         <th scope="col">Parsel ilçe</th>
-                        <th scope="col">Düzenle/Sil</th>
+                        <th scope="col">Parsel wkt</th>
+                        <th scope="col">Silme İşlemi</th>
+                        <th scope="col">Güncelleme İşlemi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,27 +43,41 @@
             </table>
         </div>
         <div id="myModal" class="modal">
-
-            <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h2>Modal Header</h2>
+                    <h2>Parsel Bilgisi</h2>
+                    <button id="cross_button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="close">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <label for="fname">First name:</label>
-                    <input type="text" id="sehir" name="fname"><br><br>
-                    <label for="lname">Last name:</label>
+                    <label for="fname">İl ismi:</label>
+                    <input type="text" id="il" name="fname"><br><br>
+                    <label for="lname">İlçe ismi:</label>
                     <input type="text" id="ilce" name="lname"><br><br>
                     <button id="add_button">EKLE</button>
                 </div>
-
             </div>
-
+        </div>
+        <div id="myModal2" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Parsel Güncelleme</h2>
+                    <button id="cross_button2" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="close">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="fname">İl ismi Güncelle:</label>
+                    <input type="text" id="il_update" name="fname"><br><br>
+                    <label for="lname">İlçe ismi Güncelle:</label>
+                    <input type="text" id="ilce_update" name="lname"><br><br>
+                    <button id="update_button">EKLE</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="./main.js"></script>
-
     <script src="./libs/v6.14.1-dist/ol.js"></script>
 </body>
 
