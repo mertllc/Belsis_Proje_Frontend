@@ -98,6 +98,7 @@ function init() {
                         add_data_to_table(cur_wkt.id, cur_wkt.il, cur_wkt.ilce, wkt_def.writeFeature(cur_wkt));
                     }
                 }
+
             }
 
 
@@ -174,7 +175,7 @@ function init() {
                 if (feature_array[i].id == data_id) {
                     if (flag == false) {
                         source.removeFeature(feature_array[i]);
-                        source.removeFeature(feature_array[i - 1]);
+                        //source.removeFeature(feature_array[i - 1]);
                         delete_row(this);
                     }
                     else {
@@ -186,10 +187,11 @@ function init() {
         }
         upp_btn.onclick = function () {
             var temp_button = this;
-            clear_oldNames();
 
             modal_updating.style.display = "block";
-            update_button.onclick = function (evt) {
+            il_update.value = data_il;
+            ilce_update.value = data_ilce;
+            update_button.onclick = function () {
                 var il_guncel = il_update.value;
                 var ilce_guncel = ilce_update.value
                 //seçilen parsel bilgilerinin veritabanına kaydedilmesi
@@ -238,6 +240,7 @@ function init() {
     }
     //veritabana verileri yazdırmak için yazılan post ajax fonksiyonu
     function post_data(il, ilce, wkt) {
+        debugger;
         $.ajax({
             url: 'https://localhost:44381/api/parcel',
             dataType: 'json',
