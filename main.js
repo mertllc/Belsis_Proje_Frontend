@@ -1,3 +1,4 @@
+//Posgis kurulumu öncesi yedekleme
 // Sayfa açıldığında fonksiyon çalışır
 window.onload = init;
 // Initial fonksiyon tanımlaması
